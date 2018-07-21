@@ -1,0 +1,296 @@
+*{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+html,body{
+    height:100%;
+    width:100%;
+}
+.bg{
+    display:none;
+    position:absolute;
+    height:100%;
+    width:100%;
+    background:#000;
+    opacity:0.45;
+    z-index:3;
+  }
+#header,#content,#bottom{
+    width:980px;
+    margin-left:auto;
+    margin-right:auto;
+}
+#header .headerLeft{
+    float:left;
+    width:330px;
+    height:76px;
+}
+#header .headerLeft span{
+    color:#333;
+    font-size:26px;
+    height:30px;
+    display:inline-block;
+    margin:23px auto;
+}
+#header .headerLeft span:nth-of-type(2){
+    font-size:20px;
+    border-left:1px solid #ccc;
+    padding-left:10px;
+}
+#header .headerRight{
+    float:right;
+    right:0px;
+    margin:23px auto;
+    color:#666;
+    font-size:12px;
+}
+#header::after{
+    content:'';
+    display:block;
+    clear:both;
+}
+#header .headerRight button{
+    width:64px;
+    height:32px;
+    border:0;
+    color:#666;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+    outline:none;
+    margin-left:3px;
+    font-family:arial;
+}
+#header .headerRight button a{
+    text-decoration:none;
+    color:#666;
+}
+#content{
+    height:460px;
+    margin:0 auto;
+    text-align:center;
+}
+#content .contentl{
+    margin-top:15px;
+    height:460px;
+    width:980px;
+    float:left;
+}
+.line{
+    width:100%;
+    height:20px;
+   background: url(https://passport.baidu.com/static/passpc-account/img/reg/reg_hr.png)
+    no-repeat center top;
+}
+
+#content .item{
+    width:980px;
+    height:42px;
+    position:relative;
+    float:left;
+    margin-bottom:20px;
+    /*border:1px solid black;*/
+}
+#content .item span{
+    display:block;
+    width:65px;
+    height:42px;
+    cursor:default;
+    text-align:right;
+    line-height:42px;
+    float:left;
+    margin-right:10px;
+    margin-left:140px;
+}
+.item .inp{
+    display:inline-block;
+    float:left;
+}
+.item .inp #sel{
+    width:350px;
+    height:40px;
+    border: 1px solid rgb(221, 221, 221);
+    padding:8px 8px;
+    line-height:40px;
+    font-size:14px;
+
+}
+
+#content input{
+    margin-right: 10px;
+    padding: 11px 10px;
+    width: 328px;
+    height: 16px;
+    font-size: 14px;
+    border: 1px solid rgb(221, 221, 221);
+    float:left;
+}
+.contentl .item .limit{
+    display:inline-block;
+    color:rgb(153,153,153);
+    font-size:12px;
+    /*overflow:hidden;*/
+    text-align:left;
+    float:left;
+    padding:3px 0px;
+}
+.contentl .item .l0{
+   
+}
+.contentl .item .l1{
+    margin-top:-6px;
+
+}
+.contentl .item .l2{
+    margin-top:8px;
+}
+.contentl .item .l3{
+    margin-top:0px;
+}
+#content .contentl .item .radio{
+    width:15px;
+    height:15px;
+    transform:translateY(100%);
+}
+#content .contentl .item .inp span{
+    width:30px;
+    margin-left:20px;
+}
+#content .item:last-child button{
+    width: 350px;
+    height: 50px;
+    background-color: #3f89ec;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    position: relative;
+    top:0;
+    cursor:pointer;
+    left: -110px;
+}
+#wrongStyle{
+    color: #fc4343;
+    padding-left: 22px;
+    float: left;
+    /*height: 16px;*/
+    line-height: 16px;
+    /*margin-top: 10px;*/
+    background:url(https://passport.baidu.com/static/passpc-account/img/reg/err_small.png) 0 center no-repeat;
+}
+#rightStyle{
+    color: #fc4343;
+    padding-left: 22px;
+    float: left;
+    height: 16px;
+    line-height: 10px;
+    margin-top: 15px;
+    background:url(https://passport.baidu.com/static/passpc-account/img/reg/reg_icons.png) -80px 0px no-repeat;
+}
+#bottom{
+    position:absolute;
+    text-align:center;
+    width:100%;
+    bottom:25px;
+}
+
+/*弹窗*/
+.popup{
+    position:absolute;
+    z-index:10001;
+    width:357px;
+    height:340px;
+    border:1px solid #ccc;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    background:#fff;
+}
+.popup .head1{
+    height:24px;
+    width:100%;  
+}
+.popup .head1 div{
+    position:absolute;
+    height:16px;
+    width:16px;
+    outline:0;
+    right:16px;
+    top:12px;
+    z-index:100;
+    background-repeat:no-repeat;
+    background:url(https://passport.baidu.com/passApi/img/pass_login_icons.png);
+    background-position:-71px -178px;
+    cursor:pointer;
+}
+.popup .head2{
+    width:300px;
+    margin:0 auto;
+    height:30px;
+}
+.popup .head2 span:nth-of-type(1){
+    font-size:20px;
+    margin-right:4px;
+    padding-right:4px;
+    border-right:1px solid #ccc;
+    color:#555;
+}
+.popup .po-content{
+    position:absolute;
+    width:357px;
+    margin:0 auto;
+    height:188px;
+}
+.po-content form{
+    /*position:absolute;*/
+    width:300px;
+    height:188px;
+    margin:0 auto;
+}
+.po-content form p{
+    height:16px;
+}
+.po-content input{
+    width:300px;
+    margin-top:38px;
+    border:1px solid #ccc;
+    height:32px;
+    padding-left:8px;
+}
+
+#sub{
+    display:block;
+    background:#3385ff;
+    border:0;
+    outline:0;
+    cursor:pointer;
+    height:40px;
+    width:300px;
+    margin:0 auto;
+    color:#fff;
+}
+#msg{
+    position:absolute;
+    height:24px;
+    width:300px;
+    /*border:1px solid black;*/
+    color:red;
+    font-size:14px;
+    text-align:center;
+}
+.tips{
+    height:20px;
+    line-height:20px;
+    font-size:18px;
+    color:#fff;
+    padding:15px 35px 15px 25px;
+    background:red;
+    position:fixed;
+    bottom:95px;
+    left:43%;
+    transform:translateX(-50%);
+    border-radius:5px;
+    display:none;
+    z-index:999;
+  }

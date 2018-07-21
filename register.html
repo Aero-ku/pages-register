@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/css/register.css">
+</head>
+
+<body>
+    <div class="bg"></div>
+    <div id="header">
+        <div class="headerLeft">
+            <span>New Study</span>
+            <span>注册新学网账号</span>
+        </div>
+        <div class="headerRight">
+            <span>我已注册，现在就
+                <button>登录</button>
+            </span>
+        </div>
+    </div>
+
+    <div class="line"></div>
+    <div id="content">
+        <div class="contentl">
+            <form id="registerForm" action="" method="post">
+                <div class="item">
+                    <span>类型:</span>
+                    <div class="inp">
+                        <select name="atype" id="sel">
+                            <option value="0">学生</option>
+                            <option value="1">教师</option>
+                            <option value="2">家长</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="item">
+                    <span>性别:</span>
+                    <div class='inp'>
+                        <span>男：</span>
+                        <input type="radio" name="asex" value="男" class='radio' checked>
+                        <span>女：</span>
+                        <input type="radio" name="asex" value="女" class='radio'>
+                    </div>
+                </div>
+            </form>
+            <div class="item">
+                <button id="regist">注册</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div class="tips">注册成功！</div>
+    <div id="bottom">2018 ©NewStudy</div>
+    <script src="./src/js/jquery.js"></script>
+    <!--<script src="./src/js/codeImg.js"></script>-->
+    <script>
+        // 登录弹窗
+        $(function(){
+            $.ajax({
+                type:'post',
+                url:'',
+                dataType:'json',
+                success:function(data){
+                    nameArr = data;
+                }
+            })
+        })
+        var flag = 1;
+        $('.headerRight button').on('click', function () {
+            $('.bg').css('display', 'block')
+            if (flag) {
+                flag = 0;
+                var str =
+                    `<div class="popup">
+                        <div class="head1">
+                            <div></div>
+                        </div>
+                        <div class="head2">
+                            <span>四则运算</span><span>登录账号</span>
+                        </div>
+                        <div class="po-content">
+                            <form id="logForm"action="" method="post">
+                                <p id="msg"></p>
+                                <input id="log-inp1"type="text"placeholder="手机/邮箱/用户名">
+                                <input id="log-inp2"type="password" placeholder="密码">
+                            </form>
+                            <button id="sub">登录</button>
+                        </div>
+                    </div>`;
+                $('body').append(str);
+            }
+            $('.popup').css('display', 'block');
+            $('.head1 div').one('click', function () {
+                $('.popup').css('display', 'none');
+                $('body').css('background', '#fff');
+                $('.bg').css('display', 'none');
+            })
+            $('#sub').on("click", function () {
+                if (!$("#log-inp1").val()) {
+                    $('#msg').html("请输入用户名！");
+                    popTips('请输入用户名','',1);
+                    return;
+                }
+                if (!$('#log-inp2').val()) {
+                    $('#msg').html('请输入密码！');
+                    popTips('请输入密码！','',1);
+                    return;
+                }
+                $('#logForm').submit();
+            })
+        })
+        //跳转登录页面
+        // $('.headerRight button').click(function(){
+        //     $(window).attr('location','./login.html');
+        //     console.log('click');
+        // })
+
+        var oInputArr = [{
+            name: 'aname',
+            left: '用户名:',
+            placeholder: '请输入用户名',
+            rule: '设置后不可更改<br>只能用中文、英文、数字、下划线，4-12个字符'
+        }, {
+            name: 'password',
+            left: '密码:',
+            placeholder: '请设置登录密码',
+            rule: '长度为6到12个字符<br>支持数字，大小写字母和标点符号<br>不允许有空格'
+        }, {
+            name: 'atel',
+            left: '手机号:',
+            placeholder: '可用于登录或找回密码',
+            rule: '请输入中国大陆手机号，其它用户不可见'
+        }, {
+            name: 'aemail',
+            left: '邮箱:',
+            placeholder: 'name@example.com',
+            rule: '请输入合法邮箱地址，以便接收班级通知<br>其它用户不可见'
+        }]
+        //生成dom结构
+        for (var i = 3; i >= 0; i--) {
+            var oDiv = $('<div></div>');
+            oDiv.addClass('item');
+            oDiv.html('<span>' + oInputArr[i].left + '</span>' + ' <div class="inp">\
+                    <input type="text"id="inp'+ i + '"placeholder="' + oInputArr[i].placeholder + '"\
+                name="'+ oInputArr[i].name + '"></div><div class="limit l' + i + '"></div>')
+            $('.contentl').find('.item').eq(1).before(oDiv);
+        }
+        var limitArr = $('.limit');
+        for (var i = 0; i < 4; i++) {
+            var oInput = $('#inp' + i);
+            (function (index) {
+                oInput.focus(function () {
+                    limitArr.eq(index).html(oInputArr[index].rule);
+                    limitArr.eq(index).attr('id', '');
+                })
+            })(i)
+        }
+        //用户名
+        // var nameArr = ['good', 'hello', 'fun', 'happy', 'nice', 'perfect'];
+        var nameArr = '';
+        var oInput0 = $('#inp0');
+        if (!oInput0.val()) {
+            oInput0.blur(function () {
+                limitArr.eq(0).html('');
+                limitArr[0].id = '';
+            })
+        }
+        //用户名查重
+        oInput0.change(function () {
+            if (!oInput0.val()) {
+                oInput0.blur(function () {
+                    limitArr.eq(0).attr('id', '');
+                    limitArr.eq(0).html('');
+                })
+            }
+            else if(nameArr.indexOf(oInput0.val()) >= 0) {
+                oInput0.blur(function () {
+                    // if (nameArr.indexOf(oInput0.val()) >= 0) {
+                    //     limitArr.eq(0).attr('id', "wrongStyle");
+                    //     limitArr.eq(0).html('此用户名太受欢迎，请更换一个');
+                    // }
+                    $.post('***?account='+oInput0.val(),function(data){
+                        if(data == 0){
+                            limitArr.eq(0).attr('id', "wrongStyle");
+                            limitArr.eq(0).html('此用户名太受欢迎，请更换一个');
+                        }
+                    })
+                })
+            }
+            else {
+                oInput0.blur(function () {
+                    if (regName(oInput0.val())) {
+                        limitArr.eq(0).attr('id', 'rightStyle')
+                        limitArr.eq(0).html('');
+                    } else {
+                        limitArr.eq(0).attr('id', 'wrongStyle');
+                        limitArr.eq(0).html('设置后不可更改<br>只能用中文、英文、数字、下划线，4-12个字符');
+                    }
+                })
+            }
+        })
+        //用户名校验 只能用中文、英文、数字、下划线、4-12个字符
+        function regName(str) {
+            var reg = /^[\u4E00-\u9FA5\ufa2d\w]{3,12}$/;
+            return reg.test(str);
+        }
+
+        //密码
+        var oInput1 = $('#inp1');
+        oInput1.attr('type', 'password');
+        if (!oInput1.val()) {
+            oInput1.blur(function () {
+                limitArr.eq(1).attr('id', '');
+                limitArr.eq(1).html('');
+            })
+        }
+        oInput1.change(function () {
+
+            if (!oInput1.val()) {
+                //重新输入时
+                oInput1.blur(function () {
+                    console.log(123);
+                    limitArr.eq(1).attr('id', '');
+                    limitArr.eq(1).html('');
+                })
+            } else {
+                oInput1.blur(function () {
+                    if (regPwd(oInput1.val())) {
+                        limitArr.eq(1).attr('id', 'rightStyle');
+                        limitArr.eq(1).html('');
+                    }
+                    else {
+                        limitArr.eq(1).attr('id', 'wrongStyle');
+                        limitArr.eq(1).html('长度为6到12个字符<br>支持数字，大小写字母和标点符号<br>不允许有空格');
+                    }
+                })
+            }
+        })
+        //密码匹配 长度为6到12个字符<br>支持数字，大小写字母和标点符号<br>不允许有空格
+        function regPwd(str) {
+            var reg = /^[\w\S]{6,12}$/;
+            return reg.test(str);
+        }
+
+        //手机号
+        var oInput2 = $('#inp2');
+        if (!oInput2.val()) {
+            oInput2.blur(function () {
+                limitArr.eq(2).attr('id', '');
+                limitArr.eq(2).html('');
+            })
+        }
+        oInput2.change(function () {
+            console.log(oInput2.val());
+            if (!oInput2.val()) {
+                oInput2.blur(function () {
+                    limitArr.eq(2).attr('id', '');
+                    limitArr.eq(2).html('');
+                })
+            } else {
+                oInput2.blur(function () {
+                    if (regTel(oInput2.val())) {
+                        console.log(1)
+                        limitArr.eq(2).attr('id', 'rightStyle');
+                        limitArr.eq(2).html('');
+                    } else {
+                        console.log(2)
+                        limitArr.eq(2).attr('id', 'wrongStyle');
+                        limitArr.eq(2).html('请输入合法的中国大陆手机号，其它用户不可见');
+                    }
+                })
+
+            }
+        })
+        //手机号验证
+        function regTel(str) {
+            var reg = /^1\d{10}$/;
+            return reg.test(str);
+        }
+
+        //邮箱
+        var oInput3 = $('#inp3');
+        if (!oInput3.val()) {
+            oInput3.blur(function () {
+                limitArr.eq(3).attr('id', '');
+                limitArr.eq(3).html('');
+            })
+        }
+        oInput3.change(function () {
+            if (!oInput3.val()) {
+                oInput3.blur(function () {
+                    limitArr.eq(3).attr('id', '');
+                    limitArr.eq(3).html('');
+                })
+            } else {
+                oInput3.blur(function () {
+                    if (regEmail(oInput3.val())) {
+                        limitArr.eq(3).attr('id', 'rightStyle');
+                        limitArr.eq(3).html('');
+                    } else {
+                        limitArr.eq(3).attr('id', 'wrongStyle');
+                        limitArr.eq(3).html('请输入合法邮箱地址，以便接收班级通知<br>其它用户不可见');
+                    }
+                })
+
+            }
+        })
+        //邮箱验证
+        function regEmail(str) {
+            var reg = /^([A-Za-z0-9\-_])+@([A-Za-z0-9\-_])+([\.A-Za-z0-9\-_])+/;
+            return reg.test(str);
+        }
+        $("#regist").click(function (e) {
+            e.preventDefault();
+            console.log($('#registerForm').serialize());
+            if (!$('#inp0').val()) {
+                popTips('请设置用户名！');
+                
+                return;
+            } else {
+                if ($('.l0').attr('id') == undefined || $('.l0').attr('id') == 'wrongStyle') {
+                    alert('请按要求设置用户名！');
+                    return;
+                }
+            }
+            if (!$('#inp1').val()) {
+                popTips('请设置密码！');
+                return;
+            } else {
+                if ($('.l1').attr('id') == undefined || $('.l1').attr('id') == 'wrongStyle') {
+                    alert('请按要求设置密码');
+                    return;
+                }
+            }
+            if (!$('#inp2').val()) {
+                popTips('请设置手机号！');
+                return;
+            } else {
+                if ($('.l2').attr('id') == undefined || $('.l2').attr('id') == 'wrongStyle') {
+                    popTips('请按要求设置手机号');
+                    return;
+                }
+            }
+            if (!$('#inp3').val()) {
+                popTips('请设置邮箱！');
+                return;
+            } else {
+                if ($('.l3').attr('id') == undefined || $('.l3').attr('id') == 'wrongStyle') {
+                    popTips('请按要求设置邮箱');
+                    return;
+                }
+            }
+            popTips('注册成功！', 'blue');
+            setTimeout(function () {
+                $('#registerForm').submit();
+            }, 1000);
+        })
+        //弹窗函数
+        function popTips(msg, background,left) {
+            if (background) {
+                $('.tips').css('background', background);
+            }
+            if(left){
+                $('.tips').css({'left':'50%'});
+            }else{
+                $('.tips').css({'left':'43%'});
+            }
+            $('.tips').css('display', 'block');
+            $('.tips').html(msg);//"邀请码必须是六位字符"
+            $('.tips').animate({ bottom: 90 }, 400, 'linear').animate({ bottom: 95 }, 400, 'linear', function () {
+                setTimeout(function () {
+                    $('.tips').hide();
+                }, 800);
+            })
+        }
+    </script>
+</body>
+</html>
